@@ -1,1 +1,1 @@
->Hijacks chrome webkitSpeechRecognition for non web application | (more to come)
+>Hijacks chrome webkitSpeechRecognition for non web applications | (more to come)
