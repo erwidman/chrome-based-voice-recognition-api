@@ -19,21 +19,21 @@ var WebSocket = require('simple-websocket');
 var SocketServer = require('simple-websocket/server');
 
 
-launchSpeechRecognition()
-.then((data)=>{
-	let client = data.client;
-	initSpeechRecognition({
-		lang : 'en-us',
-		interimResults : false,
-		maxAlternatives : 1,
-	},client);
-	addFilter("hello",client);
-	addFilter('lightson',client);
-	client.on('data',(data)=>{
-		console.log(data.toString('utf-8'));
-	});
-	startListen(client);
-})
+// launchSpeechRecognition()
+// .then((data)=>{
+// 	let client = data.client;
+// 	initSpeechRecognition({
+// 		lang : 'en-us',
+// 		interimResults : false,
+// 		maxAlternatives : 1,
+// 	},client);
+// 	addFilter("hello",client);
+// 	addFilter('lightson',client);
+// 	client.on('data',(data)=>{
+// 		console.log(data.toString('utf-8'));
+// 	});
+// 	startListen(client);
+// })
 
 
 
