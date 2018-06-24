@@ -15,10 +15,10 @@ const express = require('express');
 const app = express();
 var server = http.createServer(app);
 var WebSocket = require('simple-websocket');
-app.use(express.static('.'));
+app.use(express.static(__dirname));
 var SocketServer = require('simple-websocket/server');
 
-//console.log(process.platform);
+// console.log(process.platform);
 // launchSpeechRecognition()
 // .then((data)=>{
 // 	let client = data.client;
