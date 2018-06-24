@@ -32,8 +32,16 @@ class SpeechRecognition{
 		
 			let data = event.results[0][0].transcript;
 			console.log(data);
-			console.log(this.filter.test(data));
-			if(this.filter && this.filter.test(event.results[0][0].transcript)){
+
+			let match = false;
+			for(var i in this.filter){
+				if(this.filter[i].test(data)){
+					match = true;
+					break;
+				}
+			}
+
+			if(this.filter && match){
 				socket.send(data);
 			}
 			else if (!this.filter)
@@ -55,21 +63,15 @@ class SpeechRecognition{
 
 	addFilter(expression){
 		expression = this._convertExpression(expression);
+		console.log(expression);
 		if(!this.filter)
-			this.filter = new RegExp(expression.source);
-		else
-			this.filter = this._concatFilter(expression);
+			this.filter = [new RegExp(expression.source)];
+		else{
+			this.filter.push(expression);
+		}
 		console.log(this.filter);
 	}
 
-	_concatFilter(expression){
-		let r1 = this.filter;
-		let r2 = expression
-		return new new RegExp(r1.source + r2.source, 
-                   (r1.global ? 'g' : '') 
-                   + (r1.ignoreCase ? 'i' : '') + 
-                   (r1.multiline ? 'm' : ''));
-	}
 
 
 	_convertExpression(expression){

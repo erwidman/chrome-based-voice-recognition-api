@@ -15,10 +15,10 @@ const express = require('express');
 const app = express();
 var server = http.createServer(app);
 var WebSocket = require('simple-websocket');
- app.use(express.static('.'));
+app.use(express.static('.'));
 var SocketServer = require('simple-websocket/server');
 
-
+//console.log(process.platform);
 // launchSpeechRecognition()
 // .then((data)=>{
 // 	let client = data.client;
@@ -27,13 +27,14 @@ var SocketServer = require('simple-websocket/server');
 // 		interimResults : false,
 // 		maxAlternatives : 1,
 // 	},client);
-// 	addFilter("hello",client);
-// 	addFilter('lightson',client);
+// 	// addFilter("hello",client);
+// 	// //addFilter('lights on',client);
+// 	// addFilter("^lights on$",client);
 // 	client.on('data',(data)=>{
 // 		console.log(data.toString('utf-8'));
 // 	});
 // 	startListen(client);
-// })
+// });
 
 
 
@@ -54,8 +55,15 @@ function launchSpeechRecognition(){
 
 function bootChrome(port){
 	console.log(port);
+	
 	let arg =  ['--app=http://localhost:'+port];
-	const chrx = spawn('chrome',arg);	
+	let chrx;
+	if(process.platform.includes('darwin'))
+		chrx = spawn('Google\ Chrome',arg);
+	else if (process.platform.includes('win'))
+		chrx = spawn('chrome',arg);	
+	else
+		chrx = spawn("google-chrome",arg)
 }
 
 
