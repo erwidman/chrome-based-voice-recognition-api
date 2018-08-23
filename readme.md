@@ -1,4 +1,4 @@
->An API used to hijacks chrome webkitSpeechRecognition for non web applications.
+>An API used to hijack chrome webkitSpeechRecognition for non-web applications.
 
 ## Description
 This API intends to create a binding to Chrome SpeechRecognition API for native node processes outside web environments. The use of Chrome's voice recognition as opposed to a paid cloud service offers an inexpensive, easy to install, fast alternative for small projects that don't justify the hassle of setting up a cloud service.
