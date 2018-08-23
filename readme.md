@@ -1,10 +1,10 @@
 >An API used to hijacks chrome webkitSpeechRecognition for non web applications.
 
 ## Description
-This API intends to create a binding to Chrome SpeechRecognition API for native node processes outside web environments. Using Chrome's voice recognition as opposed to a paid cloud service offers an inexpensive, easy to install, fast alternative for small projects that don't justify the hassel of setting up a cloud service.
+This API intends to create a binding to Chrome SpeechRecognition API for native node processes outside web environments. The use of Chrome's voice recognition as opposed to a paid cloud service offers an inexpensive, easy to install, fast alternative for small projects that don't justify the hassle of setting up a cloud service.
 
 ## Caveats
-The original concept of the project involved a headless chrome instance, however due to a number of issues - it does not seem reasonable to accomplish headless as it requires hacking around in the chromium source code. In the meantime, the API simply opens a small chrome window.
+The original concept involved a headless chrome instance, however due to a number of issues - it does not seem reasonable to accomplish headless as it will require hacking around the chromium source code. In the meantime, the API simply opens a small chrome window.
 
 In order for the API to operate one of the follow must be a valid environment variable pointing to the chrome executable:
 
