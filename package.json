@@ -1,6 +1,6 @@
 {
   "name": "chrome-based-voice-recognition-api",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "A API for utilizing the voice recognition provided by a browser for personal programs.",
   "main": "index.js",
   "scripts": {
