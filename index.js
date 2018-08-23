@@ -1,78 +1,135 @@
-
-module.exports = {
-	launchSpeechRecognition : launchSpeechRecognition,
-	initSpeechRecognition : initSpeechRecognition,
-	addGrammar : addGrammar,
-	addFilter: addFilter,
-	startListen : startListen,
-	endListen : endListen
-};
-
-
-const {spawn} = require('child_process');
+/*
+	AUTHOR : 
+		ERIC WIDMANN
+	DATE : 	 
+		8.23.2018
+*/
+const {spawn, execSync} = require('child_process');
 const http = require('http');
 const express = require('express');
 const app = express();
-var server = http.createServer(app);
-var WebSocket = require('simple-websocket');
-app.use(express.static(__dirname));
-var SocketServer = require('simple-websocket/server');
+const server = http.createServer(app);
+const WebSocket = require('simple-websocket');
+const SocketServer = require('simple-websocket/server');
 
-// console.log(process.platform);
-// launchSpeechRecognition()
+app.use(express.static(__dirname));
+
+// launchSpeechRecognition(12000)
 // .then((data)=>{
 // 	let client = data.client;
 // 	initSpeechRecognition({
 // 		lang : 'en-us',
 // 		interimResults : false,
 // 		maxAlternatives : 1,
+// 		infiniteListen : false
 // 	},client);
-// 	// addFilter("hello",client);
-// 	// //addFilter('lights on',client);
-// 	// addFilter("^lights on$",client);
-// 	client.on('data',(data)=>{
-// 		console.log(data.toString('utf-8'));
+// 	//addFilter("^lights on$",client);
+// 	client.on('recognition',(data)=>{
+// 		console.log(data);
+// 		setTimeout(()=>startListen(client),3000);
 // 	});
+// 	client.on('startedListen',()=>{
+// 		//todo
+// 		console.log('starting listen');
+// 	});
+// 	client.on('stopedListen',()=>{
+// 		//todo
+// 	})
+// 	client.on('recognitionError',(err)=>{
+// 		//todo
+// 	})
 // 	startListen(client);
+// 	//setTimeout(()=>startListen(client),2000);
 // });
 
 
 
 
-function launchSpeechRecognition(){
+function launchSpeechRecognition(pagePort){
 	return new Promise((resolve,reject)=>{
-		server.listen(()=>{
+		server.listen({port: pagePort},()=>{
 			bootChrome(server.address().port);
 			resolve();
 		});
 	})
 	.then(()=>{
-		return bootSocketServer();
+		return bootSocketServer(pagePort);
+	})
+	.catch((ex)=>{
+		console.error(ex);
 	});
 
 }
 
 
-function bootChrome(port){
-	console.log(port);
+function bootChrome(port,sokPort){
 	
-	let arg =  ['--app=http://localhost:'+port];
-	let chrx;
-	if(process.platform.includes('darwin'))
-		chrx = spawn('Google\ Chrome',arg);
-	else if (process.platform.includes('win'))
-		chrx = spawn('chrome',arg);	
-	else
-		chrx = spawn("google-chrome",arg)
+
+	let possiblePaths = ['Google\\ Chrome', 'chrome','google-chrome','chromium-browser'];
+	let acceptedPath = null;
+	for(let path of possiblePaths){
+		try{
+			let result = execSync(`${path} --version`);
+		}
+		catch(ex){
+			continue;
+		}
+		
+		acceptedPath = path;
+		break;
+	}
+
+	if(!acceptedPath){
+		console.error("::chrome or chromium not found in path - exiting program");
+		process.exit(0);
+	}
+
+
+
+	acceptedPath = acceptedPath.replace('\\','');
+
+
+
+	let arg =  ['--app=http://localhost:'+port,'--disable-gpu','--window-size=0,0','--window-position=0,0',
+	'--use-fake-ui-for-media-stream'];
+	let chrx = spawn(acceptedPath,arg);
+	process.on("SIGINT",()=>{
+		try{
+			chrx.kill("SIGINT");
+		}catch(ex){
+			execSync('killall -9 "Google Chrome"');
+		}
+		process.exit(0);
+	});
+	process.on("SIGTERM",()=>{
+		try{
+			chrx.kill("SIGINT");
+		}catch(ex){
+			execSync('killall -9 "Google Chrome"');
+		}
+		process.exit(0);
+	});
 }
 
 
 
 
-function bootSocketServer(){
+function bootSocketServer(port){
 	return new Promise((resolve,reject)=>{
-		let sServer = new SocketServer({port:8080});
+		let sServer = new SocketServer({port : (port+1)});
+
 		sServer.on('connection',(sok)=>{
+			sok.on('data',(data)=>{
+				data = data.toString('utf-8');
+				if(data == 'STARTED_LISTENING')
+					sok.emit('startedListen');
+				else if(data =='STOPED_LISTENING')
+					sok.emit('stopedListen');
+				else if(data[0] == '{')
+					sok.emit('recognitionError',JSON.parse(data));
+				else
+					sok.emit('recognition',data);
+			});
 			resolve({
 				client : sok,
 				serv : sServer
@@ -126,3 +183,12 @@ function endListen(client){
 		action : 'end'
 	}));
 }
+
+module.exports = {
+	launchSpeechRecognition : launchSpeechRecognition,
+	initSpeechRecognition : initSpeechRecognition,
+	addGrammar : addGrammar,
+	addFilter: addFilter,
+	startListen : startListen,
+	endListen : endListen
+};

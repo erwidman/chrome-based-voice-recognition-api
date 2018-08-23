@@ -1,3 +1,10 @@
+/*
+	AUTHOR : 
+		ERIC WIDMANN
+	DATE : 	 
+		8.23.2018
+*/
+
 class SpeechRecognition{
 	constructor(options){
 		let recog = this._recog;
@@ -6,26 +13,22 @@ class SpeechRecognition{
 			recog.lang !== options.lang;
 		if(options.interimResults)
 			recog.interimResults = options.interimResults;
-		if(options.continuous)
-			recog.continuous = options.continuous;
 		if(options.maxAlternatives !== undefined)
 			recog.maxAlternatives = options.maxAlternatives;
-		if(options.serviceURI !== undefined)
-			recog.serviceURI = options.serviceURI;
 		if(options.infiniteListen){
-			recog.onend = (event)=>{
-				recog.start();
-			};
+			recog.infiniteListen = true;
 		}
 	
 		this.recog = recog;
 		this.recog.grammars = new webkitSpeechGrammarList();
 
 		this.recog.onstart = ()=>{
-			// console.log('running');
+			socket.send('STARTED_LISTENING');
+			this.recog.isListening = true;
 		}
 		this.recog.onerror = (ev)=>{
 			console.log(ev);
+			socket.send(JSON.stringify(ev));
 		}
 
 		this.recog.onresult = (event)=>{
@@ -50,8 +53,10 @@ class SpeechRecognition{
 		};
 
 		this.recog.onend = (event)=>{
-
-			this.recog.start();
+			socket.send('STOPED_LISTENING');
+			this.recog.isListening = false;
+			if(this.recog.infiniteListen)
+				this.recog.start();
 		}
 
 	}
@@ -63,13 +68,11 @@ class SpeechRecognition{
 
 	addFilter(expression){
 		expression = this._convertExpression(expression);
-		console.log(expression);
 		if(!this.filter)
 			this.filter = [new RegExp(expression.source)];
 		else{
 			this.filter.push(expression);
 		}
-		console.log(this.filter);
 	}
 
 
@@ -84,9 +87,7 @@ class SpeechRecognition{
 }
 
 var recog;
-
-
-var socket = new SimpleWebsocket("ws://localhost:8080");
+var socket = new SimpleWebsocket(`ws://localhost:${Number(window.location.port)+1}`);
 var decoder = new TextDecoder('utf-8');
 socket.on('data',(data)=>{
 	let obj= JSON.parse(decoder.decode(data));
@@ -107,11 +108,13 @@ socket.on('data',(data)=>{
 			recog.addFilter(obj.expression);
 			break;
 		case 'start':
-			console.log('starting');
-			recog.recog.start();
+			console.log(recog.recog.isListening);
+			if(!recog.recog.isListening)
+				recog.recog.start();
 			break;
 		case 'end':
-			recog.recog.stop();
+			if(recog.recog.isListening)
+				recog.recog.stop();
 			break;
 	}
 })
