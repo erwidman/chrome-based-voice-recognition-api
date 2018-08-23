@@ -47,17 +47,17 @@ recog.launchSpeechRecognition(12000)
 
 ## API
 
-###launchSpeechRecogition(port)
+####launchSpeechRecogition(port)
 
-####Description
+#####Description
 &nbsp;&nbsp;&nbsp;&nbsp; Spins up the websocket server and chrome instance.
 
-####Params
+#####Params
 &nbsp;&nbsp;&nbsp;&nbsp;port (number) : The desired port of page server
 
 &nbsp;&nbsp;&nbsp;&nbsp;Note : port + 1 will be used for websocket server
 
-####Returns 
+#####Returns 
 &nbsp;&nbsp;&nbsp;&nbsp;An object with two properties -
 
 - client : an instace of simple-websocket handling IPC
@@ -66,12 +66,12 @@ recog.launchSpeechRecognition(12000)
 
 
 
-###initSpeechRecognition(options,client) 
+####initSpeechRecognition(options,client) 
 
-####Description
+#####Description
 &nbsp;&nbsp;&nbsp;&nbsp; Instantiates webkit speech recog in chrome. 
 
-####Params
+#####Params
 &nbsp;&nbsp;&nbsp;&nbsp;options : An object with settings to be applied to speech object.
 
 &nbsp;&nbsp;&nbsp;&nbsp;All are optional.
@@ -83,7 +83,7 @@ recog.launchSpeechRecognition(12000)
 
 &nbsp;&nbsp;&nbsp;&nbsp;client : The instance of simple-websocket from launchSpeechRecogntion
 
-####Returns 
+#####Returns 
 &nbsp;&nbsp;&nbsp;&nbsp;An object with two properties
 
 - client : an instace of simple-websocket handling the IPC
@@ -91,42 +91,42 @@ recog.launchSpeechRecognition(12000)
 
 
 
-###addGrammar(grammar,weight,client)
+####addGrammar(grammar,weight,client)
 
-####Description
+#####Description
 &nbsp;&nbsp;&nbsp;&nbsp; Adds a grammar to an active recognition instance.
 
-####Params
+#####Params
 &nbsp;&nbsp;&nbsp;&nbsp;grammar & weight : see [link](https://developer.mozilla.org/en-US/docs/Web/API/SpeechRecognition/grammars) 
 
 &nbsp;&nbsp;&nbsp;&nbsp;client : The instance of simple-websocket from launchSpeechRecogntion
 
-####Returns 
+#####Returns 
 &nbsp;&nbsp;&nbsp;&nbsp;none
 
 
 
-###addFilter(expression,client)
+####addFilter(expression,client)
 
-####Description
+#####Description
 &nbsp;&nbsp;&nbsp;&nbsp; Adds a filter specifying what phrases will trigger a recognition event.
 
-####Params
+#####Params
 &nbsp;&nbsp;&nbsp;&nbsp;expression (string): JS regex in the form of string specifyng a filter
 
 &nbsp;&nbsp;&nbsp;&nbsp;client : The instance of simple-websocket from launchSpeechRecogntion
 
-####Returns 
+#####Returns 
 &nbsp;&nbsp;&nbsp;&nbsp;none
 
 
 
-###startListen(client)
+####startListen(client)
 
-####Description
+#####Description
 &nbsp;&nbsp;&nbsp;&nbsp; Request recog object to begin listening
 
-####Params
+#####Params
 
 &nbsp;&nbsp;&nbsp;&nbsp;client : The instance of simple-websocket from launchSpeechRecogntion
 
@@ -136,18 +136,17 @@ recog.launchSpeechRecognition(12000)
 
 
 
-###endListen(client)
+####endListen(client)
 
-####Description
+#####Description
 &nbsp;&nbsp;&nbsp;&nbsp; Request recog object to stop listening
 
-####Params
+#####Params
 
 &nbsp;&nbsp;&nbsp;&nbsp;client : The instance of simple-websocket from launchSpeechRecogntion
 
-####Returns 
+#####Returns 
 &nbsp;&nbsp;&nbsp;&nbsp;none
-
 
 
 
