@@ -64,8 +64,9 @@ recog.launchSpeechRecognition(12000)
 - serv :  an instance of simple-websocket/server
 
 
-###initSpeechRecognition(options,client) 
 
+
+###initSpeechRecognition(options,client) 
 
 ####Description
 &nbsp;&nbsp;&nbsp;&nbsp; Instantiates webkit speech recog in chrome. 
@@ -80,18 +81,15 @@ recog.launchSpeechRecognition(12000)
 - maxAlternatives (number) : The max number of alternatives sent from recog.
 - infiniteListen (boolean) : If true, will continue listening after a hit.
 
-
-
-
 &nbsp;&nbsp;&nbsp;&nbsp;client : The instance of simple-websocket from launchSpeechRecogntion
-
-
 
 ####Returns 
 &nbsp;&nbsp;&nbsp;&nbsp;An object with two properties
 
 - client : an instace of simple-websocket handling the IPC
 - serv :  an instance of simple-websocket/server
+
+
 
 ###addGrammar(grammar,weight,client)
 
@@ -104,7 +102,9 @@ recog.launchSpeechRecognition(12000)
 &nbsp;&nbsp;&nbsp;&nbsp;client : The instance of simple-websocket from launchSpeechRecogntion
 
 ####Returns 
-&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;none
+
+
 
 ###addFilter(expression,client)
 
@@ -119,6 +119,8 @@ recog.launchSpeechRecognition(12000)
 ####Returns 
 &nbsp;&nbsp;&nbsp;&nbsp;none
 
+
+
 ###startListen(client)
 
 ####Description
@@ -130,6 +132,8 @@ recog.launchSpeechRecognition(12000)
 
 ####Returns 
 &nbsp;&nbsp;&nbsp;&nbsp;none
+
+
 
 
 ###endListen(client)
