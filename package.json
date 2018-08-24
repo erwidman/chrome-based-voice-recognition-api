@@ -1,6 +1,6 @@
 {
   "name": "chrome-based-voice-recognition-api",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "An API used to hijack chrome webkitSpeechRecognition for non-web applications.",
   "main": "index.js",
   "scripts": {
@@ -17,5 +17,5 @@
     "voice-recognition"
   ],
   "homepage": "https://github.com/erwidman/chrome-based-voice-recognition-api",
-  "url" : "https://github.com/erwidman/chrome-based-voice-recognition-api/issues"
+  "url": "https://github.com/erwidman/chrome-based-voice-recognition-api/issues"
 }
