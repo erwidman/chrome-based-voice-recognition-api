@@ -88,8 +88,6 @@ function bootChrome(port,sokPort){
 
 	acceptedPath = acceptedPath.replace('\\','');
 
-	console.log(process.platform);
-
 
 	let arg =  ['--app=http://localhost:'+port,'--disable-gpu','--window-size=0,0','--window-position=0,0',
 	'--use-fake-ui-for-media-stream'];
