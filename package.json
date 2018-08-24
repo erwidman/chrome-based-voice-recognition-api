@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Eric Richard Widmann",
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.3",
@@ -15,5 +15,7 @@
   "keywords": [
     "chrome",
     "voice-recognition"
-  ]
+  ],
+  "homepage": "https://github.com/erwidman/chrome-based-voice-recognition-api",
+  "url" : "https://github.com/erwidman/chrome-based-voice-recognition-api/issues"
 }
