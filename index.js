@@ -14,33 +14,33 @@ const SocketServer = require('simple-websocket/server');
 
 app.use(express.static(__dirname));
 
-// launchSpeechRecognition(12000)
-// .then((data)=>{
-// 	let client = data.client;
-// 	initSpeechRecognition({
-// 		lang : 'en-us',
-// 		interimResults : false,
-// 		maxAlternatives : 1,
-// 		infiniteListen : false
-// 	},client);
-// 	//addFilter("^lights on$",client);
-// 	client.on('recognition',(data)=>{
-// 		console.log(data);
-// 		setTimeout(()=>startListen(client),3000);
-// 	});
-// 	client.on('startedListen',()=>{
-// 		//todo
-// 		console.log('starting listen');
-// 	});
-// 	client.on('stopedListen',()=>{
-// 		//todo
-// 	})
-// 	client.on('recognitionError',(err)=>{
-// 		//todo
-// 	})
-// 	startListen(client);
-// 	//setTimeout(()=>startListen(client),2000);
-// });
+launchSpeechRecognition(12000)
+.then((data)=>{
+	let client = data.client;
+	initSpeechRecognition({
+		lang : 'en-us',
+		interimResults : false,
+		maxAlternatives : 1,
+		infiniteListen : true
+	},client);
+	//addFilter("^lights on$",client);
+	client.on('recognition',(data)=>{
+		console.log(data);
+		//setTimeout(()=>startListen(client),3000);
+	});
+	client.on('startedListen',()=>{
+		//todo
+		console.log('starting listen');
+	});
+	client.on('stopedListen',()=>{
+		//todo
+	})
+	client.on('recognitionError',(err)=>{
+		//todo
+	})
+	startListen(client);
+	//setTimeout(()=>startListen(client),2000);
+});
 
 
 
@@ -88,6 +88,7 @@ function bootChrome(port,sokPort){
 
 	acceptedPath = acceptedPath.replace('\\','');
 
+	console.log(process.platform);
 
 
 	let arg =  ['--app=http://localhost:'+port,'--disable-gpu','--window-size=0,0','--window-position=0,0',

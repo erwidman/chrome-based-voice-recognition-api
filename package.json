@@ -1,7 +1,7 @@
 {
   "name": "chrome-based-voice-recognition-api",
   "version": "2.0.0",
-  "description": "A API for utilizing the voice recognition provided by a browser for personal programs.",
+  "description": "An API used to hijack chrome webkitSpeechRecognition for non-web applications.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
